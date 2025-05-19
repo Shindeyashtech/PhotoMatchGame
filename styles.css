@@ -1,0 +1,175 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  cursor: none;
+  background: rgba(217, 217, 217, 0.58);
+}
+.circle {
+  z-index: 9999;
+  height: 24px;
+  width: 24px;
+  border-radius: 24px;
+  background-color: black;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+h1 {
+  margin: 30px 0 10px;
+  color: #2c3e50;
+  font-size: 2.5rem;
+}
+#timer, #high-score, #moves {
+  font-size: 1.2rem;
+  margin: 8px auto;
+  padding: 10px 25px;
+  color: #fff;
+  border-radius: 25px;
+  display: inline-block;
+  font-weight: bold;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+#timer {font-size:12px; color:black}
+#timer::before { content: "🕒 "; margin-right: 5px; font-size:12px; color: black; }
+#high-score { font-size:12px; color: black; }
+#moves { font-size:12px; color: black; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 120px);
+  grid-gap: 15px;
+  justify-content: center;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #c8a8d8;
+  width: fit-content;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+.card {
+  object-fit: contain;
+  width: 120px;
+  height: 120px;
+  perspective: 1000px;
+  position: relative;
+}
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+.card.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+.card-front, .card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  backface-visibility: hidden;
+}
+.card-front {
+  background-color: #ccc;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #fff;
+  border-radius: 10px;
+}
+.card-back img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 10px;
+}
+.card-back {
+  transform: rotateY(180deg);
+}
+.scoring{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0.5rem;
+}
+.non-bt{
+    height: auto;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    width: auto;
+    box-sizing: border-box;
+    background: rgba(217, 217, 217, 0.58);
+    border: 1px solid white;
+    box-shadow: 12px 17px 51px rgba(0, 0, 0, 0.22);
+    backdrop-filter: blur(6px);
+    border-radius: 17px;
+    cursor: none;
+    transition: all 0.5s;
+    user-select: none;
+    font-weight: bolder;
+    color: black;
+}
+.btn{
+  margin: auto;
+  box-sizing: border-box;
+  width: auto;
+  height: auto;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
+  background: rgba(133, 133, 133, 0.58);
+  border: 1px solid white;
+  box-shadow: 12px 17px 51px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(6px);
+  border-radius: 17px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.5s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  font-weight: bolder;
+  color: black;
+}
+
+.btn:hover {
+  border: 1px solid black;
+  transform: scale(1.05);
+}
+ .non-bt:hover {
+  border: 1px solid black;
+  transform: scale(1.05);
+}
+
+.btn:active {
+  transform: scale(0.95) rotateZ(1.7deg);
+}
+.footer {
+  margin-top: 40px;
+  color: #555;
+  font-size: 0.9rem;
+}
+.main{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+@media screen and (max-width: 520px) {
+  .grid {
+    grid-template-columns: repeat(2, 120px);
+  }
+}
