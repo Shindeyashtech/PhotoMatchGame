@@ -1,15 +1,67 @@
-const awsconfig = {
-  Auth: {
-    region: 'us-east-1', // e.g., 'us-east-1'
-    userPoolId: 'ap-south-1_nYjMAhrSo',
-    userPoolWebClientId: '18mgfq7ouah0h4j9e2t97vp9at',
-  }
-};
-aws_amplify.Amplify.configure(awsconfig);
-
 const themeSelect = document.getElementById("theme-select");
 const selectedTheme = localStorage.getItem("selectedTheme") || "fruits";
 themeSelect.value = selectedTheme;
+
+
+        const storageKey = 'theme-preference'
+
+const onClick = () => {
+  // flip current value
+  theme.value = theme.value === 'light'
+    ? 'dark'
+    : 'light'
+
+  setPreference()
+}
+
+const getColorPreference = () => {
+  if (localStorage.getItem(storageKey))
+    return localStorage.getItem(storageKey)
+  else
+    return window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light'
+}
+
+const setPreference = () => {
+  localStorage.setItem(storageKey, theme.value)
+  reflectPreference()
+}
+
+const reflectPreference = () => {
+  document.firstElementChild
+    .setAttribute('data-theme', theme.value)
+
+  document
+    .querySelector('#theme-toggle')
+    ?.setAttribute('aria-label', theme.value)
+}
+
+const theme = {
+  value: getColorPreference(),
+}
+
+// set early so no page flashes / CSS is made aware
+reflectPreference()
+
+window.onload = () => {
+  // set on load so screen readers can see latest value on the button
+  reflectPreference()
+
+  // now this script can find and listen for clicks on the control
+  document
+    .querySelector('#theme-toggle')
+    .addEventListener('click', onClick)
+}
+
+// sync with system changes
+window
+  .matchMedia('(prefers-color-scheme: dark)')
+  .addEventListener('change', ({matches:isDark}) => {
+    theme.value = isDark ? 'dark' : 'light'
+    setPreference()
+  })
+        
 
 function getImageUrls(theme) {
   const themes = {
@@ -98,34 +150,6 @@ function incrementMoves() {
 }
 
 updateHighScoreDisplay();
-const Auth = aws_amplify.Auth;
-document.getElementById('signup-btn').addEventListener('click', async () => {
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-
-  try {
-    await Auth.signUp({ username: email, password });
-    document.getElementById('auth-message').textContent = 'Check your email to confirm.';
-  } catch (err) {
-    document.getElementById('auth-message').textContent = err.message;
-  }
-});
-
-document.getElementById('signin-btn').addEventListener('click', async () => {
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-
-  try {
-    const user = await Auth.signIn(email, password);
-    document.getElementById('auth-message').textContent = `Welcome, ${user.username}!`;
-    // Optional: Hide login form, show game board
-  } catch (err) {
-    document.getElementById('auth-message').textContent = err.message;
-  }
-});
-const user = await Auth.currentAuthenticatedUser();
-const highScoreKey = `highScore_${selectedTheme}_${user.username}`;
-localStorage.setItem(highScoreKey, time);
 
 cards.forEach((url) => {
   const card = document.createElement("div");
@@ -245,3 +269,17 @@ function animateCircles() {
 }
 
 animateCircles();
+
+window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        document.getElementById('main').classList.add('show');
+        document.getElementById('reset-btn').classList.add('show');
+        document.getElementById('heading').classList.add('show');
+      }, 50);
+    });
+
+function myFunction() {
+   var element = document.getElementById('eyeball')
+   element.classList.toggle("dark-mode");
+}
+
